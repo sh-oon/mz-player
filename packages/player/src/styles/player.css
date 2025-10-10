@@ -291,13 +291,19 @@
 
 .mz-player-custom-subtitle {
   position: absolute;
-  bottom: 80px;
+  bottom: 20px; /* 기본: 컨테이너 아래에서 20px */
   left: 0;
   right: 0;
   pointer-events: none;
   z-index: 50;
   display: flex;
   justify-content: center;
+  transition: bottom 0.3s ease;
+}
+
+/* hover 시 컨트롤러 위로 이동 (컨트롤러보다 20px 위) */
+.mz-player:hover .mz-player-custom-subtitle {
+  bottom: 100px; /* 컨트롤러 높이(~80px) + 20px */
 }
 
 /* Fullscreen styles */
@@ -306,10 +312,19 @@
   height: 100vh;
 }
 
-.mz-player:fullscreen .mz-player-subtitle,
-.mz-player:fullscreen .mz-player-custom-subtitle {
+.mz-player:fullscreen .mz-player-subtitle {
   bottom: 120px; /* 전체화면에서는 더 위에 표시 */
   font-size: 24px;
+}
+
+.mz-player:fullscreen .mz-player-custom-subtitle {
+  bottom: 20px; /* 전체화면 기본 위치 */
+  font-size: 24px;
+}
+
+/* 전체화면 + hover 시 */
+.mz-player:fullscreen:hover .mz-player-custom-subtitle {
+  bottom: 120px; /* 전체화면 컨트롤러 위 */
 }
 
 .mz-player:-webkit-full-screen {

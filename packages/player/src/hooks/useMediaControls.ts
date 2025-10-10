@@ -15,6 +15,7 @@ export function useMediaControls(
     volume: 1,
     isMuted: false,
     isFullscreen: false,
+    isPiP: false,
     isLoading: true,
     currentTrack: tracks.findIndex((track) => track.default) ?? -1,
     availableTracks: tracks,
@@ -132,6 +133,22 @@ export function useMediaControls(
     }
   }, [videoRef, containerRef]);
 
+  // PiP 모드 토글
+  const togglePiP = useCallback(async () => {
+    const videoElement = videoRef.current;
+    if (!videoElement) return;
+
+    try {
+      if (document.pictureInPictureElement) {
+        await document.exitPictureInPicture();
+      } else if (document.pictureInPictureEnabled) {
+        await videoElement.requestPictureInPicture();
+      }
+    } catch (error) {
+      console.error('PiP error:', error);
+    }
+  }, [videoRef]);
+
   // 비디오 이벤트 리스너
   useEffect(() => {
     const videoElement = videoRef.current;
@@ -173,6 +190,14 @@ export function useMediaControls(
       }));
     };
 
+    const handlePiPChange = () => {
+      const isPiP = document.pictureInPictureElement === videoElement;
+      setState((s) => ({
+        ...s,
+        isPiP,
+      }));
+    };
+
     videoElement.addEventListener('play', handlePlay);
     videoElement.addEventListener('pause', handlePause);
     videoElement.addEventListener('timeupdate', handleTimeUpdate);
@@ -180,6 +205,8 @@ export function useMediaControls(
     videoElement.addEventListener('volumechange', handleVolumeChange);
     videoElement.addEventListener('loadstart', handleLoadStart);
     videoElement.addEventListener('canplay', handleCanPlay);
+    videoElement.addEventListener('enterpictureinpicture', handlePiPChange);
+    videoElement.addEventListener('leavepictureinpicture', handlePiPChange);
 
     // 전체화면 이벤트 리스너 (브라우저 호환성)
     document.addEventListener('fullscreenchange', handleFullscreenChange);
@@ -195,6 +222,8 @@ export function useMediaControls(
       videoElement.removeEventListener('volumechange', handleVolumeChange);
       videoElement.removeEventListener('loadstart', handleLoadStart);
       videoElement.removeEventListener('canplay', handleCanPlay);
+      videoElement.removeEventListener('enterpictureinpicture', handlePiPChange);
+      videoElement.removeEventListener('leavepictureinpicture', handlePiPChange);
 
       document.removeEventListener('fullscreenchange', handleFullscreenChange);
       document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
@@ -229,6 +258,29 @@ export function useMediaControls(
     }
   }, [videoRef, useCustomSubtitle]);
 
+  // PIP 모드일 때 자막 처리
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const textTracks = video.textTracks;
+    if (!textTracks || textTracks.length === 0) return;
+
+    // 현재 선택된 트랙이 없으면 처리하지 않음
+    if (state.currentTrack < 0) return;
+
+    const currentTextTrack = textTracks[state.currentTrack];
+    if (!currentTextTrack) return;
+
+    // PIP 모드일 때: 네이티브 자막을 showing으로 (PIP 창에서 보이도록)
+    // 일반 모드일 때: 커스텀 자막 사용 시 hidden, 아니면 showing
+    if (state.isPiP) {
+      currentTextTrack.mode = 'showing';
+    } else {
+      currentTextTrack.mode = useCustomSubtitle ? 'hidden' : 'showing';
+    }
+  }, [state.isPiP, state.currentTrack, videoRef, useCustomSubtitle]);
+
   return {
     state,
     controls: {
@@ -237,6 +289,7 @@ export function useMediaControls(
       setVolume,
       toggleMute,
       toggleFullscreen,
+      togglePiP,
       setTrack,
     },
   };

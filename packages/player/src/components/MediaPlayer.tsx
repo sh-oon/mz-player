@@ -1,11 +1,27 @@
-import { useEffect, useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { MediaPlayerContext } from '../context/MediaPlayerContext';
 import { useHLS } from '../hooks/useHLS';
 import { useMediaControls } from '../hooks/useMediaControls';
 import { useSubtitles } from '../hooks/useSubtitles';
 import type { MediaPlayerProps } from '../types';
 import { Controls } from './Controls';
+import { ButtonGroup } from './compound/ButtonGroup';
+import { ControlsContainer } from './compound/ControlsContainer';
+import { FullscreenButton } from './compound/FullscreenButton';
+import { PiPButton } from './compound/PiPButton';
+import { PlayButton } from './compound/PlayButton';
+import { SeekBar } from './compound/SeekBar';
+import { SubtitleButton } from './compound/SubtitleButton';
+import { TimeDisplay } from './compound/TimeDisplay';
+import { VolumeControl } from './compound/VolumeControl';
 
-export function MediaPlayer({
+export interface MediaPlayerCompoundProps extends MediaPlayerProps {
+  /** 자식 컴포넌트 (컴파운드 패턴 사용 시) */
+  children?: ReactNode;
+}
+
+function MediaPlayerRoot({
   src,
   autoPlay = false,
   controls = true,
@@ -25,7 +41,8 @@ export function MediaPlayer({
   onTimeUpdate,
   onVolumeChange,
   onError,
-}: Readonly<MediaPlayerProps>) {
+  children,
+}: Readonly<MediaPlayerCompoundProps>) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -42,6 +59,21 @@ export function MediaPlayer({
     containerRef,
     tracks,
     !!customSubtitle
+  );
+
+  // Context 값
+  const contextValue = useMemo(
+    () => ({
+      state,
+      togglePlay: mediaControls.togglePlay,
+      seek: mediaControls.seek,
+      setVolume: mediaControls.setVolume,
+      toggleMute: mediaControls.toggleMute,
+      toggleFullscreen: mediaControls.toggleFullscreen,
+      togglePiP: mediaControls.togglePiP,
+      setTrack: mediaControls.setTrack,
+    }),
+    [state, mediaControls]
   );
 
   // 자막 처리 (항상 호출, 사용 여부는 아래에서 결정)
@@ -151,105 +183,124 @@ export function MediaPlayer({
   }, [onPlay, onPause, onEnded, onTimeUpdate, onVolumeChange, onError]);
 
   return (
-    <div
-      ref={containerRef}
-      className={`mz-player ${className}`}
-      style={{
-        width,
-        height,
-        aspectRatio: height === 'auto' ? '16 / 9' : undefined,
-      }}
-    >
-      <video
-        ref={videoRef}
-        className="mz-player-video"
-        loop={loop}
-        muted={muted}
-        poster={poster}
-        playsInline
-        preload={preload}
-        crossOrigin="anonymous"
-        onClick={mediaControls.togglePlay}
+    <MediaPlayerContext.Provider value={contextValue}>
+      <div
+        ref={containerRef}
+        className={`mz-player ${className}`}
+        style={{
+          width,
+          height,
+          aspectRatio: height === 'auto' ? '16 / 9' : undefined,
+        }}
       >
-        {tracks.map((track, index) => (
-          <track
-            key={`${track.src}-${index}`}
-            src={track.src}
-            kind={track.kind || 'subtitles'}
-            srcLang={track.srclang}
-            label={track.label}
-            default={track.default}
-          />
-        ))}
-      </video>
-
-      {/* 커스텀 자막만 렌더링 (customSubtitle prop이 있을 때만) */}
-      {customSubtitle && currentSubtitle && state.currentTrack !== -1 && (
-        <div className="mz-player-custom-subtitle">{customSubtitle(currentSubtitle)}</div>
-      )}
-
-      {controls &&
-        (state.isFullscreen && fullscreenControls ? (
-          // 전체화면일 때 커스텀 컨트롤 사용
-          fullscreenControls({
-            state,
-            togglePlay: mediaControls.togglePlay,
-            seek: mediaControls.seek,
-            setVolume: mediaControls.setVolume,
-            toggleMute: mediaControls.toggleMute,
-            toggleFullscreen: mediaControls.toggleFullscreen,
-            setTrack: mediaControls.setTrack,
-          })
-        ) : (
-          // 일반 모드에서는 기본 컨트롤 사용
-          <Controls
-            state={state}
-            onPlayPause={mediaControls.togglePlay}
-            onSeek={mediaControls.seek}
-            onVolumeChange={mediaControls.setVolume}
-            onToggleMute={mediaControls.toggleMute}
-            onToggleFullscreen={mediaControls.toggleFullscreen}
-            onTrackChange={mediaControls.setTrack}
-          />
-        ))}
-
-      {state.isLoading && (
-        <div className="mz-player-loading">
-          <div className="mz-player-spinner" />
-        </div>
-      )}
-
-      {/* 재생/일시정지 상태 표시 */}
-      {statusIcon && (
-        <div
-          key={animationKey}
-          className="mz-player-status-overlay"
+        <video
+          ref={videoRef}
+          className="mz-player-video"
+          loop={loop}
+          muted={muted}
+          poster={poster}
+          playsInline
+          preload={preload}
+          crossOrigin="anonymous"
+          onClick={mediaControls.togglePlay}
         >
-          <div className="mz-player-status-icon">
-            {statusIcon === 'play' ? (
-              <svg
-                width="60"
-                height="60"
-                viewBox="0 0 24 24"
-                fill="white"
-              >
-                <title>재생</title>
-                <path d="M8 5v14l11-7z" />
-              </svg>
+          {tracks.map((track, index) => (
+            <track
+              key={`${track.src}-${index}`}
+              src={track.src}
+              kind={track.kind || 'subtitles'}
+              srcLang={track.srclang}
+              label={track.label}
+              default={track.default}
+            />
+          ))}
+        </video>
+
+        {/* 커스텀 자막만 렌더링 (customSubtitle prop이 있을 때만) */}
+        {customSubtitle && currentSubtitle && state.currentTrack !== -1 && (
+          <div className="mz-player-custom-subtitle">{customSubtitle(currentSubtitle)}</div>
+        )}
+
+        {/* children이 있으면 컴파운드 패턴 사용, 없으면 기본 컨트롤 렌더링 */}
+        {children ||
+          (controls &&
+            (state.isFullscreen && fullscreenControls ? (
+              // 전체화면일 때 커스텀 컨트롤 사용
+              fullscreenControls({
+                state,
+                togglePlay: mediaControls.togglePlay,
+                seek: mediaControls.seek,
+                setVolume: mediaControls.setVolume,
+                toggleMute: mediaControls.toggleMute,
+                toggleFullscreen: mediaControls.toggleFullscreen,
+                togglePiP: mediaControls.togglePiP,
+                setTrack: mediaControls.setTrack,
+              })
             ) : (
-              <svg
-                width="60"
-                height="60"
-                viewBox="0 0 24 24"
-                fill="white"
-              >
-                <title>일시정지</title>
-                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
-              </svg>
-            )}
+              // 일반 모드에서는 기본 컨트롤 사용
+              <Controls
+                state={state}
+                onPlayPause={mediaControls.togglePlay}
+                onSeek={mediaControls.seek}
+                onVolumeChange={mediaControls.setVolume}
+                onToggleMute={mediaControls.toggleMute}
+                onToggleFullscreen={mediaControls.toggleFullscreen}
+                onTogglePiP={mediaControls.togglePiP}
+                onTrackChange={mediaControls.setTrack}
+              />
+            )))}
+
+        {state.isLoading && (
+          <div className="mz-player-loading">
+            <div className="mz-player-spinner" />
           </div>
-        </div>
-      )}
-    </div>
+        )}
+
+        {/* 재생/일시정지 상태 표시 */}
+        {statusIcon && (
+          <div
+            key={animationKey}
+            className="mz-player-status-overlay"
+          >
+            <div className="mz-player-status-icon">
+              {statusIcon === 'play' ? (
+                <svg
+                  width="60"
+                  height="60"
+                  viewBox="0 0 24 24"
+                  fill="white"
+                >
+                  <title>재생</title>
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              ) : (
+                <svg
+                  width="60"
+                  height="60"
+                  viewBox="0 0 24 24"
+                  fill="white"
+                >
+                  <title>일시정지</title>
+                  <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+                </svg>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </MediaPlayerContext.Provider>
   );
 }
+
+// 컴파운드 컴포넌트 패턴
+export const MediaPlayer = Object.assign(MediaPlayerRoot, {
+  Controls: ControlsContainer,
+  ButtonGroup,
+  PlayButton,
+  VolumeControl,
+  SeekBar,
+  TimeDisplay,
+  FullscreenButton,
+  PiPButton,
+  SubtitleButton,
+});
