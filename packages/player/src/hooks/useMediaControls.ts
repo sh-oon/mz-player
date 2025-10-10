@@ -1,12 +1,14 @@
 import type { RefObject } from 'react';
 import { useCallback, useEffect, useState } from 'react';
-import type { MediaState } from '../types';
+import type { MediaState, VideoTrack } from '../types';
 
 export function useMediaControls(
   videoRef: RefObject<HTMLVideoElement | null>,
   containerRef?: RefObject<HTMLDivElement | null>,
+  tracks: VideoTrack[] = [],
+  useCustomSubtitle = false
 ) {
-  const [state, setState] = useState<MediaState>({
+  const [state, setState] = useState<MediaState>(() => ({
     isPlaying: false,
     currentTime: 0,
     duration: 0,
@@ -14,7 +16,9 @@ export function useMediaControls(
     isMuted: false,
     isFullscreen: false,
     isLoading: true,
-  });
+    currentTrack: tracks.findIndex((track) => track.default) ?? -1,
+    availableTracks: tracks,
+  }));
 
   // 재생/일시정지 토글
   const togglePlay = useCallback(() => {
@@ -53,6 +57,30 @@ export function useMediaControls(
     if (!videoElement) return;
     videoElement.muted = !videoElement.muted;
   }, [videoRef]);
+
+  // 자막 트랙 변경
+  const setTrack = useCallback(
+    (trackIndex: number) => {
+      const videoElement = videoRef.current;
+      if (!videoElement) return;
+
+      const textTracks = videoElement.textTracks;
+      if (!textTracks) return;
+
+      // 모든 트랙 비활성화
+      for (let i = 0; i < textTracks.length; i++) {
+        textTracks[i].mode = 'hidden';
+      }
+
+      // 선택된 트랙 활성화 (커스텀 자막이 아닐 때만 showing으로)
+      if (trackIndex >= 0 && trackIndex < textTracks.length) {
+        textTracks[trackIndex].mode = useCustomSubtitle ? 'hidden' : 'showing';
+      }
+
+      setState((s) => ({ ...s, currentTrack: trackIndex }));
+    },
+    [videoRef, useCustomSubtitle]
+  );
 
   // 전체화면 토글
   const toggleFullscreen = useCallback(async () => {
@@ -144,7 +172,7 @@ export function useMediaControls(
     videoElement.addEventListener('volumechange', handleVolumeChange);
     videoElement.addEventListener('loadstart', handleLoadStart);
     videoElement.addEventListener('canplay', handleCanPlay);
-    
+
     // 전체화면 이벤트 리스너 (브라우저 호환성)
     document.addEventListener('fullscreenchange', handleFullscreenChange);
     document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
@@ -159,13 +187,39 @@ export function useMediaControls(
       videoElement.removeEventListener('volumechange', handleVolumeChange);
       videoElement.removeEventListener('loadstart', handleLoadStart);
       videoElement.removeEventListener('canplay', handleCanPlay);
-      
+
       document.removeEventListener('fullscreenchange', handleFullscreenChange);
       document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
       document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
       document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
     };
   }, [videoRef, containerRef]);
+
+  // 초기 트랙 활성화
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    setState((s) => ({
+      ...s,
+      availableTracks: tracks,
+      currentTrack: tracks.findIndex((track) => track.default) ?? -1,
+    }));
+
+    // 기본 트랙이 있으면 활성화
+    const defaultTrackIndex = tracks.findIndex((track) => track.default);
+    if (defaultTrackIndex >= 0) {
+      const textTracks = video.textTracks;
+      if (textTracks && textTracks[defaultTrackIndex]) {
+        // 모든 트랙 비활성화
+        for (let i = 0; i < textTracks.length; i++) {
+          textTracks[i].mode = 'hidden';
+        }
+        // 기본 트랙만 활성화 (커스텀 자막이 아니면 showing)
+        textTracks[defaultTrackIndex].mode = useCustomSubtitle ? 'hidden' : 'showing';
+      }
+    }
+  }, [videoRef, useCustomSubtitle]);
 
   return {
     state,
@@ -175,6 +229,7 @@ export function useMediaControls(
       setVolume,
       toggleMute,
       toggleFullscreen,
+      setTrack,
     },
   };
 }

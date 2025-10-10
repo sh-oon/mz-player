@@ -1,3 +1,16 @@
+export interface VideoTrack {
+  /** 자막 파일 URL (.vtt, .srt) */
+  src: string;
+  /** 자막 종류 ('subtitles' | 'captions' | 'descriptions' | 'chapters' | 'metadata') */
+  kind?: 'subtitles' | 'captions' | 'descriptions' | 'chapters' | 'metadata';
+  /** 자막 언어 코드 (예: 'ko', 'en', 'ja') */
+  srclang?: string;
+  /** 자막 레이블 (UI에 표시될 이름) */
+  label?: string;
+  /** 기본 활성화 여부 */
+  default?: boolean;
+}
+
 export interface MediaPlayerProps {
   /** 미디어 소스 URL (HLS 또는 일반 비디오) */
   src: string;
@@ -13,6 +26,10 @@ export interface MediaPlayerProps {
   poster?: string;
   /** 프리로드 옵션 ('none' | 'metadata' | 'auto') */
   preload?: 'none' | 'metadata' | 'auto';
+  /** 자막 트랙 목록 */
+  tracks?: VideoTrack[];
+  /** 커스텀 자막 렌더링 함수 */
+  customSubtitle?: (currentSubtitle: string | null) => React.ReactNode;
   /** 너비 (CSS 값) */
   width?: string | number;
   /** 높이 (CSS 값) */
@@ -48,6 +65,8 @@ export interface FullscreenControlsProps {
   toggleMute: () => void;
   /** 전체화면 토글 */
   toggleFullscreen: () => void;
+  /** 자막 트랙 변경 */
+  setTrack: (trackIndex: number) => void;
 }
 
 export interface MediaState {
@@ -58,6 +77,8 @@ export interface MediaState {
   isMuted: boolean;
   isFullscreen: boolean;
   isLoading: boolean;
+  currentTrack: number; // 현재 활성화된 자막 트랙 인덱스 (-1: 자막 없음)
+  availableTracks: VideoTrack[]; // 사용 가능한 자막 목록
 }
 
 export interface HLSConfig {

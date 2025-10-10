@@ -232,10 +232,84 @@
   }
 }
 
+/* Subtitle menu */
+.mz-player-subtitle-menu {
+  position: relative;
+}
+
+.mz-player-track-menu {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  margin-bottom: 8px;
+  background-color: rgba(0, 0, 0, 0.9);
+  border-radius: 8px;
+  padding: 8px 0;
+  min-width: 150px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 200;
+}
+
+.mz-player-track-item {
+  width: 100%;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  color: white;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.mz-player-track-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.mz-player-track-item.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  font-weight: bold;
+}
+
+/* Subtitles */
+.mz-player-subtitle {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 18px;
+  line-height: 1.4;
+  text-align: center;
+  max-width: 80%;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.mz-player-custom-subtitle {
+  position: absolute;
+  bottom: 80px;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+}
+
 /* Fullscreen styles */
 .mz-player:fullscreen {
   width: 100vw;
   height: 100vh;
+}
+
+.mz-player:fullscreen .mz-player-subtitle,
+.mz-player:fullscreen .mz-player-custom-subtitle {
+  bottom: 120px; /* 전체화면에서는 더 위에 표시 */
+  font-size: 24px;
 }
 
 .mz-player:-webkit-full-screen {
