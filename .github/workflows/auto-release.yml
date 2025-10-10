@@ -47,7 +47,10 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install dependencies
-        run: yarn install
+        run: |
+          yarn install
+          yarn --version
+          ls -la packages/player/
 
       - name: Get current version
         id: current_version
@@ -111,7 +114,9 @@ jobs:
           npm version $NEW_VERSION --no-git-tag-version
 
       - name: Build player package
-        run: yarn workspace @mz-player/player build
+        run: |
+          cd packages/player
+          yarn build
 
       - name: Commit version bump
         run: |

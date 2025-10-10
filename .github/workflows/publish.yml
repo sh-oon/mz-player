@@ -38,10 +38,14 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install dependencies
-        run: yarn install
+        run: |
+          yarn install
+          yarn --version
 
       - name: Build player package
-        run: yarn workspace @mz-player/player build
+        run: |
+          cd packages/player
+          yarn build
 
       - name: Get package version
         id: package_version
@@ -51,7 +55,9 @@ jobs:
           echo "📦 Publishing version: $VERSION"
 
       - name: Publish to NPM
-        run: yarn workspace @mz-player/player npm publish --access public
+        run: |
+          cd packages/player
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
