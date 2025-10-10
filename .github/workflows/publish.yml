@@ -21,24 +21,20 @@ jobs:
 
       - name: Enable Corepack
         run: corepack enable
-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
-
-      - name: Cache yarn dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ${{ steps.yarn-cache-dir-path.outputs.dir }}
-            .yarn/cache
-            .yarn/install-state.gz
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+      
+      - name: Verify checkout
+        run: |
+          echo "📁 Checking workspace structure..."
+          ls -la
+          echo "📦 Checking root package.json..."
+          cat package.json
+          echo "📦 Checking yarn files..."
+          ls -la yarn.lock .yarnrc.yml
 
       - name: Install dependencies
-        run: yarn install
+        run: |
+          echo "📦 Installing dependencies..."
+          yarn install
 
       - name: Build player package
         run: yarn workspace @mz-player/player build
