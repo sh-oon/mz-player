@@ -1,0 +1,17 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.000
+Hello! This is MZ Player demo.
+
+00:00:03.000 --> 00:00:06.000
+This player is a React component based on HLS.
+
+00:00:06.000 --> 00:00:09.000
+Testing the subtitle feature.
+
+00:00:09.000 --> 00:00:12.000
+Supports multiple languages.
+
+00:00:12.000 --> 00:00:15.000
+Custom subtitle UI is also available!
+

@@ -23,6 +23,27 @@ export default function Home() {
                 controls
                 autoPlay
                 muted
+                tracks={[
+                  {
+                    src: '/subtitles/ko.vtt',
+                    kind: 'subtitles',
+                    srclang: 'ko',
+                    label: '한국어',
+                    default: true,
+                  },
+                  {
+                    src: '/subtitles/en.vtt',
+                    kind: 'subtitles',
+                    srclang: 'en',
+                    label: 'English',
+                  },
+                  {
+                    src: '/subtitles/ja.vtt',
+                    kind: 'subtitles',
+                    srclang: 'ja',
+                    label: '日本語',
+                  },
+                ]}
               />
             </div>
           </div>

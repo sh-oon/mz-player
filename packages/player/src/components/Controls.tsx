@@ -1,4 +1,5 @@
 import type React from 'react';
+import { useState } from 'react';
 import type { MediaState } from '../types';
 
 interface ControlsProps {
@@ -8,6 +9,7 @@ interface ControlsProps {
   readonly onVolumeChange: (volume: number) => void;
   readonly onToggleMute: () => void;
   readonly onToggleFullscreen: () => void;
+  readonly onTrackChange: (trackIndex: number) => void;
 }
 
 export function Controls({
@@ -17,14 +19,16 @@ export function Controls({
   onVolumeChange,
   onToggleMute,
   onToggleFullscreen,
+  onTrackChange,
 }: ControlsProps) {
+  const [showTrackMenu, setShowTrackMenu] = useState(false);
   const formatTime = (seconds: number) => {
     if (!Number.isFinite(seconds)) return '0:00';
-    
+
     const hours = Math.floor(seconds / 3600);
     const mins = Math.floor((seconds % 3600) / 60);
     const secs = Math.floor(seconds % 60);
-    
+
     if (hours > 0) {
       return `${hours}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     }
@@ -129,6 +133,56 @@ export function Controls({
               className="mz-player-volume-bar"
             />
           </div>
+
+          {/* 자막 버튼 */}
+          {state.availableTracks.length > 0 && (
+            <div className="mz-player-subtitle-menu">
+              <button
+                type="button"
+                onClick={() => setShowTrackMenu(!showTrackMenu)}
+                className="mz-player-button"
+                aria-label="Subtitles"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <title>자막</title>
+                  <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 12h4v2H4v-2zm10 6H4v-2h10v2zm6 0h-4v-2h4v2zm0-4H10v-2h10v2z" />
+                </svg>
+              </button>
+
+              {showTrackMenu && (
+                <div className="mz-player-track-menu">
+                  <button
+                    type="button"
+                    className={`mz-player-track-item ${state.currentTrack === -1 ? 'active' : ''}`}
+                    onClick={() => {
+                      onTrackChange(-1);
+                      setShowTrackMenu(false);
+                    }}
+                  >
+                    자막 끄기
+                  </button>
+                  {state.availableTracks.map((track, index) => (
+                    <button
+                      key={`track-${track.src}-${index}`}
+                      type="button"
+                      className={`mz-player-track-item ${state.currentTrack === index ? 'active' : ''}`}
+                      onClick={() => {
+                        onTrackChange(index);
+                        setShowTrackMenu(false);
+                      }}
+                    >
+                      {track.label || `자막 ${index + 1}`}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
 
           <button
             type="button"
