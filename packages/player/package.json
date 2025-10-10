@@ -2,6 +2,13 @@
   "name": "@mz-player/player",
   "version": "0.1.0",
   "description": "HLS-based React media player component",
+  "license": "MIT",
+  "author": "sh-oon",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sh-oon/next-ts-boilerplate.git",
+    "directory": "packages/player"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -11,7 +18,7 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
-    "./styles.css": "./dist/styles.css"
+    "./styles.css": "./dist/player.css"
   },
   "files": [
     "dist",

@@ -1,0 +1,35 @@
+name: Publish to NPM
+
+on:
+  push:
+    tags:
+      - 'v*'  # v로 시작하는 태그가 푸시될 때 실행 (예: v1.0.0)
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build player package
+        run: yarn workspace @mz-player/player build
+
+      - name: Publish to NPM
+        run: yarn workspace @mz-player/player npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
