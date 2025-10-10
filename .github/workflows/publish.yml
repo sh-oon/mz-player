@@ -28,8 +28,20 @@ jobs:
       - name: Build player package
         run: yarn workspace @mz-player/player build
 
+      - name: Get package version
+        id: package_version
+        run: |
+          VERSION=$(node -p "require('./packages/player/package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "📦 Publishing version: $VERSION"
+
       - name: Publish to NPM
         run: yarn workspace @mz-player/player npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish success notification
+        run: |
+          echo "✅ Successfully published @mz-player/player@${{ steps.package_version.outputs.version }} to NPM"
+          echo "📦 Package URL: https://www.npmjs.com/package/@mz-player/player"
 
