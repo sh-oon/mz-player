@@ -1,4 +1,5 @@
 import type React from 'react';
+import { useEffect } from 'react';
 
 export interface ButtonProps {
   children: React.ReactNode;
@@ -13,6 +14,10 @@ export const Button: React.FC<ButtonProps> = ({
   disabled = false,
   variant = 'primary',
 }) => {
+  useEffect(() => {
+    console.log('Button rendered');
+  }, []);
+
   const baseStyle: React.CSSProperties = {
     padding: '12px 24px',
     fontSize: '16px',

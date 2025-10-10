@@ -73,7 +73,12 @@
   },
   "overrides": [
     {
-      "includes": ["apps/*/src/**/*.tsx", "apps/*/src/**/*.jsx", "packages/ui/**/*.tsx"],
+      "includes": [
+        "apps/*/src/**/*.tsx",
+        "apps/*/src/**/*.jsx",
+        "packages/ui/**/*.tsx",
+        "packages/player/**/*.tsx"
+      ],
       "linter": {
         "rules": {
           "a11y": {

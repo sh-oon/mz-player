@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.0",
+    "@mz-player/player": "*",
     "@mz-player/ui-components": "*",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^24",

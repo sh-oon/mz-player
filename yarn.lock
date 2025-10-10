@@ -604,6 +604,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mz-player/player@npm:*, @mz-player/player@workspace:packages/player":
+  version: 0.0.0-use.local
+  resolution: "@mz-player/player@workspace:packages/player"
+  dependencies:
+    "@mz-player/tsconfig": "npm:*"
+    "@types/react": "npm:^19"
+    "@types/react-dom": "npm:^19"
+    hls.js: "npm:^1.5.26"
+    react: "npm:^19.2.0"
+    react-dom: "npm:^19.2.0"
+    tsup: "npm:^8.3.5"
+    typescript: "npm:^5.3.3"
+  peerDependencies:
+    react: ">=18.0.0"
+    react-dom: ">=18.0.0"
+  languageName: unknown
+  linkType: soft
+
 "@mz-player/tsconfig@npm:*, @mz-player/tsconfig@workspace:packages/tsconfig":
   version: 0.0.0-use.local
   resolution: "@mz-player/tsconfig@workspace:packages/tsconfig"
@@ -642,6 +660,7 @@ __metadata:
   resolution: "@mz-player/web@workspace:apps/web"
   dependencies:
     "@biomejs/biome": "npm:^2.2.0"
+    "@mz-player/player": "npm:*"
     "@mz-player/ui-components": "npm:*"
     "@tailwindcss/postcss": "npm:^4"
     "@types/node": "npm:^24"
@@ -1598,6 +1617,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"hls.js@npm:^1.5.26":
+  version: 1.6.13
+  resolution: "hls.js@npm:1.6.13"
+  checksum: 10c0/3f937f64735c02cb82e16268f763e35f73214ad47345ce51e8fa55d532fff184e0f889f06a87f07f83c36c2d25bd987f791ef6cf4de216f9d90e1fa383262094
+  languageName: node
+  linkType: hard
+
 "http-cache-semantics@npm:^4.1.1":
   version: 4.2.0
   resolution: "http-cache-semantics@npm:4.2.0"
@@ -2285,7 +2311,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:19.2.0":
+"react-dom@npm:19.2.0, react-dom@npm:^19.2.0":
   version: 19.2.0
   resolution: "react-dom@npm:19.2.0"
   dependencies:
@@ -2750,7 +2776,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsup@npm:^8.0.1, tsup@npm:~8.5.0":
+"tsup@npm:^8.0.1, tsup@npm:^8.3.5, tsup@npm:~8.5.0":
   version: 8.5.0
   resolution: "tsup@npm:8.5.0"
   dependencies:

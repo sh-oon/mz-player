@@ -1,0 +1,51 @@
+{
+  "name": "@mz-player/player",
+  "version": "0.1.0",
+  "description": "HLS-based React media player component",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "type-check": "tsc --noEmit",
+    "lint": "biome check",
+    "format": "biome format --write"
+  },
+  "keywords": [
+    "react",
+    "media-player",
+    "video-player",
+    "hls",
+    "streaming",
+    "component"
+  ],
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "dependencies": {
+    "hls.js": "^1.5.26"
+  },
+  "devDependencies": {
+    "@mz-player/tsconfig": "*",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.3.3"
+  }
+}
