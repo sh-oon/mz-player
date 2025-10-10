@@ -59,15 +59,16 @@ export function MediaPlayer({
     return undefined;
   }, [state.isPlaying]);
 
-  // props와 video element 동기화
+  // props 초기값 설정 (마운트 시 한 번만)
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    // props 값을 video element에 동기화
+    // 초기값 설정
     video.muted = muted;
     video.loop = loop;
-  }, [muted, loop]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // 의도적으로 빈 배열 - 마운트 시에만 실행
 
   // autoPlay 처리
   useEffect(() => {

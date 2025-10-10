@@ -26,10 +26,8 @@ export function Controls({
     const secs = Math.floor(seconds % 60);
     
     if (hours > 0) {
-      // 1시간 이상: "1:23:45"
       return `${hours}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     }
-    // 1시간 미만: "23:45"
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
@@ -38,12 +36,30 @@ export function Controls({
   };
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onVolumeChange(Number(e.target.value));
+    const newVolume = Number(e.target.value);
+    onVolumeChange(newVolume);
+    if (newVolume > 0 && state.isMuted) {
+      // 볼륨을 0 이상으로 변경하면 자동으로 unmute
+      onToggleMute();
+    }
   };
 
   return (
     <div className="mz-player-controls">
       <div className="mz-player-progress">
+        <div className="mz-player-time">
+          <span>{formatTime(state.currentTime)}</span>
+          <span>{formatTime(state.duration)}</span>
+        </div>
+        <input
+          type="range"
+          min="0"
+          max={state.duration || 0}
+          value={state.currentTime}
+          onChange={handleSeekChange}
+          className="mz-player-progress-bar"
+        />
+
         <div className="mz-player-buttons">
           <button
             type="button"
@@ -142,19 +158,6 @@ export function Controls({
               </svg>
             )}
           </button>
-        </div>
-
-        <input
-          type="range"
-          min="0"
-          max={state.duration || 0}
-          value={state.currentTime}
-          onChange={handleSeekChange}
-          className="mz-player-progress-bar"
-        />
-        <div className="mz-player-time">
-          <span>{formatTime(state.currentTime)}</span>
-          <span>{formatTime(state.duration)}</span>
         </div>
       </div>
     </div>
