@@ -65,6 +65,8 @@ export interface FullscreenControlsProps {
   toggleMute: () => void;
   /** 전체화면 토글 */
   toggleFullscreen: () => void;
+  /** PiP 모드 토글 */
+  togglePiP: () => void;
   /** 자막 트랙 변경 */
   setTrack: (trackIndex: number) => void;
 }
@@ -76,6 +78,7 @@ export interface MediaState {
   volume: number;
   isMuted: boolean;
   isFullscreen: boolean;
+  isPiP: boolean;
   isLoading: boolean;
   currentTrack: number; // 현재 활성화된 자막 트랙 인덱스 (-1: 자막 없음)
   availableTracks: VideoTrack[]; // 사용 가능한 자막 목록

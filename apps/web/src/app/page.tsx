@@ -13,10 +13,11 @@ export default function Home() {
           <p className="text-gray-400">가볍고, 빠르고, 사용하기 쉬운 미디어 플레이어 컴포넌트</p>
         </header>
 
-        {/* Demo Section */}
+        {/* Demo Section - 기본 사용법 */}
         <section className="max-w-4xl mx-auto mb-16">
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 shadow-2xl">
-            <h2 className="text-2xl font-bold text-white mb-6">라이브 데모</h2>
+            <h2 className="text-2xl font-bold text-white mb-2">기본 사용법</h2>
+            <p className="text-gray-300 mb-6">간단한 props로 빠르게 시작하세요</p>
             <div className="aspect-video">
               <MediaPlayer
                 src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
@@ -44,7 +45,76 @@ export default function Home() {
                     label: '日本語',
                   },
                 ]}
+                customSubtitle={(subtitle) => <div className="text-white">{subtitle}</div>}
               />
+            </div>
+          </div>
+        </section>
+
+        {/* Demo Section - 컴파운드 컴포넌트 */}
+        <section className="max-w-4xl mx-auto mb-16">
+          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 shadow-2xl">
+            <h2 className="text-2xl font-bold text-white mb-2">컴파운드 컴포넌트 패턴 🎨</h2>
+            <p className="text-gray-300 mb-6">
+              원하는 컨트롤만 자유롭게 조합하여 커스텀 UI를 만들 수 있습니다
+            </p>
+            <div className="aspect-video">
+              <MediaPlayer
+                src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                autoPlay
+                muted
+                tracks={[
+                  {
+                    src: '/subtitles/ko.vtt',
+                    kind: 'subtitles',
+                    srclang: 'ko',
+                    label: '한국어',
+                    default: true,
+                  },
+                  {
+                    src: '/subtitles/en.vtt',
+                    kind: 'subtitles',
+                    srclang: 'en',
+                    label: 'English',
+                  },
+                  {
+                    src: '/subtitles/ja.vtt',
+                    kind: 'subtitles',
+                    srclang: 'ja',
+                    label: '日本語',
+                  },
+                ]}
+                customSubtitle={(subtitle) => <div className="text-white">{subtitle}</div>}
+              >
+                <MediaPlayer.Controls>
+                  <MediaPlayer.TimeDisplay />
+                  <MediaPlayer.SeekBar />
+                  <MediaPlayer.ButtonGroup>
+                    <MediaPlayer.PlayButton />
+                    <MediaPlayer.VolumeControl />
+                    <MediaPlayer.SubtitleButton />
+                    <MediaPlayer.PiPButton />
+                    <MediaPlayer.FullscreenButton />
+                  </MediaPlayer.ButtonGroup>
+                </MediaPlayer.Controls>
+              </MediaPlayer>
+            </div>
+            <div className="mt-4 p-4 bg-slate-950 rounded-lg">
+              <pre className="text-blue-300 font-mono text-xs overflow-x-auto">
+                {`<MediaPlayer src="...">
+  <MediaPlayer.Controls>
+    <MediaPlayer.TimeDisplay />
+    <MediaPlayer.SeekBar />
+    <MediaPlayer.ButtonGroup>
+      <MediaPlayer.PlayButton />
+      <MediaPlayer.VolumeControl />
+      <MediaPlayer.SubtitleButton />
+      <MediaPlayer.PiPButton />
+      <MediaPlayer.FullscreenButton />
+    </MediaPlayer.ButtonGroup>
+  </MediaPlayer.Controls>
+</MediaPlayer>`}
+              </pre>
             </div>
           </div>
         </section>
@@ -77,12 +147,12 @@ export default function Home() {
         <section className="max-w-4xl mx-auto mb-16">
           <h2 className="text-3xl font-bold text-white text-center mb-8">빠른 시작</h2>
           <div className="bg-slate-950 rounded-xl p-6 shadow-2xl">
-            <div className="mb-4">
+            <div className="mb-6">
               <p className="text-gray-400 mb-2">설치</p>
               <code className="text-green-400 font-mono">npm install @mz-player/player</code>
             </div>
-            <div>
-              <p className="text-gray-400 mb-2">사용법</p>
+            <div className="mb-6">
+              <p className="text-gray-400 mb-2">기본 사용법</p>
               <pre className="text-blue-300 font-mono text-sm overflow-x-auto">
                 {`import { MediaPlayer } from '@mz-player/player';
 
@@ -93,6 +163,28 @@ function App() {
       controls
       autoPlay={false}
     />
+  );
+}`}
+              </pre>
+            </div>
+            <div>
+              <p className="text-gray-400 mb-2">컴파운드 컴포넌트로 커스터마이징</p>
+              <pre className="text-blue-300 font-mono text-sm overflow-x-auto">
+                {`import { MediaPlayer } from '@mz-player/player';
+
+function CustomPlayer() {
+  return (
+    <MediaPlayer src="https://example.com/video.m3u8">
+      <MediaPlayer.Controls>
+        <MediaPlayer.TimeDisplay />
+        <MediaPlayer.SeekBar />
+        <MediaPlayer.ButtonGroup>
+          <MediaPlayer.PlayButton />
+          <MediaPlayer.VolumeControl />
+          {/* 원하는 컨트롤만 선택 */}
+        </MediaPlayer.ButtonGroup>
+      </MediaPlayer.Controls>
+    </MediaPlayer>
   );
 }`}
               </pre>
