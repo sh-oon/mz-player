@@ -1,0 +1,42 @@
+{
+  "name": "mz-player",
+  "version": "1.0.0",
+  "description": "Yarn Berry workspace based monorepo boilerplate with TypeScript, Biome, and Turbo",
+  "keywords": [
+    "monorepo",
+    "yarn-workspace",
+    "yarn-berry",
+    "typescript",
+    "biome",
+    "turbo",
+    "nextjs",
+    "boilerplate"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sh-oon/next-ts-boilerplate.git"
+  },
+  "license": "MIT",
+  "author": "sh-oon",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write --unsafe .",
+    "format": "biome format --write .",
+    "type-check": "turbo run type-check"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.5",
+    "@mz-player/tsconfig": "*",
+    "glob": "^11.0.0",
+    "turbo": "^2.5.8",
+    "typescript": "^5.3.3"
+  },
+  "packageManager": "yarn@4.1.0"
+}
