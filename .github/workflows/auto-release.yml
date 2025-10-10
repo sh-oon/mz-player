@@ -19,6 +19,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
+          ref: main  # 머지된 main 브랜치 기준으로 작업
           fetch-depth: 0  # 전체 히스토리 가져오기 (태그 비교용)
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -30,8 +31,23 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
 
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+
+      - name: Cache yarn dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ steps.yarn-cache-dir-path.outputs.dir }}
+            .yarn/cache
+            .yarn/install-state.gz
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
       - name: Install dependencies
-        run: yarn install --immutable
+        run: yarn install
 
       - name: Get current version
         id: current_version
