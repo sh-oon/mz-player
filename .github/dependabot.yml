@@ -49,11 +49,3 @@ updates:
       - 'dependencies'
       - 'packages'
 
-  - package-ecosystem: 'npm'
-    directory: '/packages/create-hono-boilerplate'
-    schedule:
-      interval: 'weekly'
-    labels:
-      - 'dependencies'
-      - 'packages'
-
