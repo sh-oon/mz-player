@@ -28,4 +28,3 @@ export function TimeDisplay({ className = '' }: Readonly<TimeDisplayProps>) {
     </div>
   );
 }
-

@@ -10,10 +10,7 @@ export interface ControlsContainerProps {
 export function ControlsContainer({ children, className = '' }: Readonly<ControlsContainerProps>) {
   return (
     <div className={`mz-player-controls ${className}`}>
-      <div className="mz-player-progress">
-        {children}
-      </div>
+      <div className="mz-player-progress">{children}</div>
     </div>
   );
 }
-

@@ -63,4 +63,3 @@ export function SubtitleButton({ className = '' }: Readonly<SubtitleButtonProps>
     </div>
   );
 }
-

@@ -24,4 +24,3 @@ export function SeekBar({ className = '' }: Readonly<SeekBarProps>) {
     />
   );
 }
-

@@ -39,4 +39,3 @@ export function FullscreenButton({ className = '' }: Readonly<FullscreenButtonPr
     </button>
   );
 }
-

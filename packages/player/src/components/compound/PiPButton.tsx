@@ -39,4 +39,3 @@ export function PiPButton({ className = '' }: Readonly<PiPButtonProps>) {
     </button>
   );
 }
-

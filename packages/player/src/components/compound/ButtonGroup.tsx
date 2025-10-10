@@ -8,10 +8,5 @@ export interface ButtonGroupProps {
 }
 
 export function ButtonGroup({ children, className = '' }: Readonly<ButtonGroupProps>) {
-  return (
-    <div className={`mz-player-buttons ${className}`}>
-      {children}
-    </div>
-  );
+  return <div className={`mz-player-buttons ${className}`}>{children}</div>;
 }
-

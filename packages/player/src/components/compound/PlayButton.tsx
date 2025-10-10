@@ -39,4 +39,3 @@ export function PlayButton({ className = '' }: Readonly<PlayButtonProps>) {
     </button>
   );
 }
-
