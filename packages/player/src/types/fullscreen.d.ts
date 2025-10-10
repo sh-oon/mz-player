@@ -14,4 +14,3 @@ interface HTMLElement {
   mozRequestFullScreen?: () => Promise<void>;
   msRequestFullscreen?: () => Promise<void>;
 }
-
