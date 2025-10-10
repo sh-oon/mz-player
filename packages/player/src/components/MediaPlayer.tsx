@@ -95,7 +95,7 @@ export function MediaPlayer({
         textTracks[i].mode = 'hidden';
       }
     }
-  }, [customSubtitle, state.currentTrack]);
+  }, [customSubtitle]);
 
   // autoPlay 처리
   useEffect(() => {

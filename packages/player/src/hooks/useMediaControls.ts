@@ -68,8 +68,8 @@ export function useMediaControls(
       if (!textTracks) return;
 
       // 모든 트랙 비활성화
-      for (let i = 0; i < textTracks.length; i++) {
-        textTracks[i].mode = 'hidden';
+      for (const textTrack of textTracks) {
+        textTrack.mode = 'hidden';
       }
 
       // 선택된 트랙 활성화 (커스텀 자막이 아닐 때만 showing으로)
@@ -96,27 +96,35 @@ export function useMediaControls(
         document.mozFullScreenElement ||
         document.msFullscreenElement;
 
-      if (!isFullscreen) {
-        // 전체화면 진입 (브라우저별 메서드)
-        if (targetElement.requestFullscreen) {
-          await targetElement.requestFullscreen();
-        } else if (targetElement.webkitRequestFullscreen) {
-          await targetElement.webkitRequestFullscreen();
-        } else if (targetElement.mozRequestFullScreen) {
-          await targetElement.mozRequestFullScreen();
-        } else if (targetElement.msRequestFullscreen) {
-          await targetElement.msRequestFullscreen();
+      if (isFullscreen) {
+        // 전체화면 해제 - 브라우저별 메서드 시도
+        const exitMethods = [
+          'exitFullscreen',
+          'webkitExitFullscreen',
+          'mozCancelFullScreen',
+          'msExitFullscreen',
+        ] as const;
+
+        for (const method of exitMethods) {
+          if (method in document && typeof document[method] === 'function') {
+            await document[method]();
+            break;
+          }
         }
       } else {
-        // 전체화면 해제
-        if (document.exitFullscreen) {
-          await document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-          await document.webkitExitFullscreen();
-        } else if (document.mozCancelFullScreen) {
-          await document.mozCancelFullScreen();
-        } else if (document.msExitFullscreen) {
-          await document.msExitFullscreen();
+        // 전체화면 진입 - 브라우저별 메서드 시도
+        const enterMethods = [
+          'requestFullscreen',
+          'webkitRequestFullscreen',
+          'mozRequestFullScreen',
+          'msRequestFullscreen',
+        ] as const;
+
+        for (const method of enterMethods) {
+          if (method in targetElement && typeof targetElement[method] === 'function') {
+            await targetElement[method]();
+            break;
+          }
         }
       }
     } catch (error) {
@@ -210,10 +218,10 @@ export function useMediaControls(
     const defaultTrackIndex = tracks.findIndex((track) => track.default);
     if (defaultTrackIndex >= 0) {
       const textTracks = video.textTracks;
-      if (textTracks && textTracks[defaultTrackIndex]) {
+      if (textTracks?.[defaultTrackIndex]) {
         // 모든 트랙 비활성화
-        for (let i = 0; i < textTracks.length; i++) {
-          textTracks[i].mode = 'hidden';
+        for (const textTrack of textTracks) {
+          textTrack.mode = 'hidden';
         }
         // 기본 트랙만 활성화 (커스텀 자막이 아니면 showing)
         textTracks[defaultTrackIndex].mode = useCustomSubtitle ? 'hidden' : 'showing';

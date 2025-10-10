@@ -10,7 +10,7 @@ interface SubtitleCue {
 export function useSubtitles(
   videoRef: RefObject<HTMLVideoElement | null>,
   currentTime: number,
-  currentTrackIndex: number,
+  currentTrackIndex: number
 ) {
   const [currentSubtitle, setCurrentSubtitle] = useState<string | null>(null);
   const [cues, setCues] = useState<SubtitleCue[]>([]);

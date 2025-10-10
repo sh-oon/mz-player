@@ -84,9 +84,6 @@
         "rules": {
           "a11y": {
             "recommended": true
-          },
-          "correctness": {
-            "useExhaustiveDependencies": "warn"
           }
         }
       }
