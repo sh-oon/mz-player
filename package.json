@@ -1,6 +1,7 @@
 {
   "name": "mz-player",
   "version": "1.0.0",
+  "private": true,
   "description": "Yarn Berry workspace based monorepo boilerplate with TypeScript, Biome, and Turbo",
   "keywords": [
     "monorepo",

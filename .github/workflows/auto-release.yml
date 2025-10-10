@@ -46,6 +46,17 @@ jobs:
         run: |
           echo "📦 Installing dependencies..."
           yarn install
+          
+      - name: Verify installation
+        run: |
+          echo "✅ Checking yarn version..."
+          yarn --version
+          echo "✅ Listing workspaces..."
+          yarn workspaces list
+          echo "✅ Checking install state..."
+          ls -la .yarn/
+          echo "✅ Checking node_modules..."
+          ls -la node_modules/ | head -20
 
       - name: Get current version
         id: current_version
