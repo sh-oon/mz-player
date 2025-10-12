@@ -1,5 +1,5 @@
 {
-  "name": "mz-player",
+  "name": "@mz-player/root",
   "version": "1.0.0",
   "private": true,
   "description": "MZ Player Monorepo",
