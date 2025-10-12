@@ -46,7 +46,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Build packages
-        run: yarn turbo run build --filter=@root/player
+        run: yarn turbo run build --filter=mz-player
 
       - name: Configure Git
         run: |
