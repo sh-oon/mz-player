@@ -6,7 +6,6 @@ on:
       - main
     paths:
       - 'packages/player/**'
-
 jobs:
   release:
     name: Build, Version & Release
