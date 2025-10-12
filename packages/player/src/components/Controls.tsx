@@ -3,14 +3,14 @@ import { useState } from 'react';
 import type { MediaState } from '../types';
 
 interface ControlsProps {
-  readonly state: MediaState;
-  readonly onPlayPause: () => void;
-  readonly onSeek: (time: number) => void;
-  readonly onVolumeChange: (volume: number) => void;
-  readonly onToggleMute: () => void;
-  readonly onToggleFullscreen: () => void;
-  readonly onTogglePiP: () => void;
-  readonly onTrackChange: (trackIndex: number) => void;
+  state: MediaState;
+  onPlayPause: () => void;
+  onSeek: (time: number) => void;
+  onVolumeChange: (volume: number) => void;
+  onToggleMute: () => void;
+  onToggleFullscreen: () => void;
+  onTogglePiP: () => void;
+  onTrackChange: (trackIndex: number) => void;
 }
 
 export function Controls({
@@ -22,7 +22,7 @@ export function Controls({
   onToggleFullscreen,
   onTogglePiP,
   onTrackChange,
-}: ControlsProps) {
+}: Readonly<ControlsProps>) {
   const [showTrackMenu, setShowTrackMenu] = useState(false);
   const formatTime = (seconds: number) => {
     if (!Number.isFinite(seconds)) return '0:00';
