@@ -17,7 +17,7 @@ jobs:
       
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main  # 머지된 main 브랜치 기준으로 작업
           fetch-depth: 0  # 전체 히스토리 가져오기 (태그 비교용)
