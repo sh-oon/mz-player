@@ -6,7 +6,6 @@ on:
       - main
     paths:
       - 'packages/player/**'
-      - '!packages/player/README.md'
 
 jobs:
   release:
