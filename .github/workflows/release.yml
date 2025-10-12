@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'packages/player/**'
+    # paths:
+    #   - 'packages/player/**'
 jobs:
   release:
     name: Build, Version & Release
