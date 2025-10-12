@@ -1,6 +1,6 @@
 'use client';
 
-import { MediaPlayer } from '@mz-player/player';
+import { MediaPlayer } from '@root/player';
 
 export default function Home() {
   return (
@@ -149,12 +149,12 @@ export default function Home() {
           <div className="bg-slate-950 rounded-xl p-6 shadow-2xl">
             <div className="mb-6">
               <p className="text-gray-400 mb-2">설치</p>
-              <code className="text-green-400 font-mono">npm install @mz-player/player</code>
+              <code className="text-green-400 font-mono">npm install @root/player</code>
             </div>
             <div className="mb-6">
               <p className="text-gray-400 mb-2">기본 사용법</p>
               <pre className="text-blue-300 font-mono text-sm overflow-x-auto">
-                {`import { MediaPlayer } from '@mz-player/player';
+                {`import { MediaPlayer } from '@root/player';
 
 function App() {
   return (
@@ -170,7 +170,7 @@ function App() {
             <div>
               <p className="text-gray-400 mb-2">컴파운드 컴포넌트로 커스터마이징</p>
               <pre className="text-blue-300 font-mono text-sm overflow-x-auto">
-                {`import { MediaPlayer } from '@mz-player/player';
+                {`import { MediaPlayer } from '@root/player';
 
 function CustomPlayer() {
   return (

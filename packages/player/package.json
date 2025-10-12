@@ -47,7 +47,7 @@
     "hls.js": "^1.5.26"
   },
   "devDependencies": {
-    "@mz-player/tsconfig": "*",
+    "@root/tsconfig": "*",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "react": "^19.2.0",

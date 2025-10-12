@@ -1,5 +1,5 @@
 {
-  "name": "@mz-player/tsconfig",
+  "name": "@root/tsconfig",
   "version": "1.0.0",
   "private": true,
   "files": [

@@ -62,7 +62,7 @@
               "next/**",
               ":PACKAGE:",
               ":PACKAGE_WITH_PROTOCOL:",
-              "@mz-player/**",
+              "@root/**",
               ":ALIAS:",
               "**",
               { "type": true }

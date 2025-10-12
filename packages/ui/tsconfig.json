@@ -1,5 +1,5 @@
 {
-  "extends": "@mz-player/tsconfig/react-library.json",
+  "extends": "@root/tsconfig/react-library.json",
   "compilerOptions": {
     "rootDir": "./src",
     "composite": true

@@ -127,13 +127,13 @@ yarn format
 
 ### Apps
 
-#### @mz-player/web
+#### @root/web
 
 Next.js 기반의 웹 애플리케이션입니다.
 
 ### Packages
 
-#### @mz-player/tsconfig
+#### @root/tsconfig
 
 공유 TypeScript 설정 패키지입니다.
 
@@ -141,22 +141,22 @@ Next.js 기반의 웹 애플리케이션입니다.
 - `nextjs.json` - Next.js 앱용
 - `react-library.json` - React 라이브러리용
 
-#### @mz-player/ui
+#### @root/ui
 
 공유 UI 컴포넌트 라이브러리입니다.
 
 ```tsx
-import { Button } from '@mz-player/ui';
+import { Button } from '@root/ui';
 
 <Button onClick={() => console.log('클릭')}>버튼</Button>;
 ```
 
-#### @mz-player/utils
+#### @root/utils
 
 공유 유틸리티 함수 라이브러리입니다.
 
 ```ts
-import { formatDate, debounce } from '@mz-player/utils';
+import { formatDate, debounce } from '@root/utils';
 
 const today = formatDate(new Date());
 const debouncedFn = debounce(() => console.log('실행!'), 300);
@@ -217,7 +217,7 @@ yarn init -y
 1. `react` - React 라이브러리
 2. `next`, `next/**` - Next.js 관련 (apps/web만)
 3. `:Library:` - 외부 라이브러리 (node_modules)
-4. `@mz-player/**` - 내부 모노레포 패키지
+4. `@root/**` - 내부 모노레포 패키지
 5. `**` - 상대 경로 import
 6. `{ "type": true }` - Type import
 

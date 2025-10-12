@@ -1,15 +1,15 @@
-# @mz-player/player
+# @root/player
 
 HLS 기반의 React 웹 미디어 플레이어 컴포넌트 라이브러리입니다.
 
 ## 설치
 
 ```bash
-npm install @mz-player/player
+npm install @root/player
 # or
-yarn add @mz-player/player
+yarn add @root/player
 # or
-pnpm add @mz-player/player
+pnpm add @root/player
 ```
 
 ## 사용법
@@ -17,7 +17,7 @@ pnpm add @mz-player/player
 ### 기본 사용법
 
 ```tsx
-import { MediaPlayer } from '@mz-player/player';
+import { MediaPlayer } from '@root/player';
 
 function App() {
   return (
@@ -34,7 +34,7 @@ function App() {
 원하는 컨트롤만 선택하여 자유롭게 UI를 구성할 수 있습니다:
 
 ```tsx
-import { MediaPlayer } from '@mz-player/player';
+import { MediaPlayer } from '@root/player';
 
 function CustomPlayer() {
   return (

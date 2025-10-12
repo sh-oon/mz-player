@@ -1,5 +1,5 @@
 {
-  "name": "@mz-player/root",
+  "name": "root",
   "version": "1.0.0",
   "private": true,
   "description": "MZ Player Monorepo",
@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.5",
-    "@mz-player/tsconfig": "*",
+    "@root/tsconfig": "*",
     "glob": "^11.0.0",
     "turbo": "^2.5.8",
     "typescript": "^5.3.3"

@@ -1,4 +1,4 @@
-# @mz-player/tsconfig
+# @root/tsconfig
 
 모노레포 전체에서 사용하는 공유 TypeScript 설정입니다.
 
@@ -14,7 +14,7 @@
 
 ```json
 {
-  "extends": "@mz-player/tsconfig/nextjs.json",
+  "extends": "@root/tsconfig/nextjs.json",
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"]
@@ -27,7 +27,7 @@
 
 ```json
 {
-  "extends": "@mz-player/tsconfig/react-library.json"
+  "extends": "@root/tsconfig/react-library.json"
 }
 ```
 
