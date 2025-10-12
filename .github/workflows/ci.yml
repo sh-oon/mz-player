@@ -1,38 +1,51 @@
-name: CI/CD
+name: CI
 
 on:
-  push:
-    branches: [main]
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  lint:
+  lint-and-typecheck:
     name: Lint & Type Check
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
       - name: Enable Corepack
         run: corepack enable
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v5
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+
+      - name: Setup yarn cache
+        uses: actions/cache@v4
         with:
-          node-version: '20'
-          cache: 'yarn'
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Lint
-        run: yarn lint
-
-      - name: Type check
+      - name: Run type check
         run: yarn type-check
+
+      - name: Run lint
+        run: yarn lint
 

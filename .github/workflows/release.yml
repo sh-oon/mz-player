@@ -1,0 +1,168 @@
+name: Release & Publish
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/player/**'
+      - '!packages/player/README.md'
+
+jobs:
+  release:
+    name: Build, Version & Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+
+      - name: Setup yarn cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build packages
+        run: yarn turbo run build --filter=@mz-player/player
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Analyze commits and determine version bump
+        id: version
+        run: |
+          # 이전 태그 가져오기
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "Last tag: $LAST_TAG"
+          
+          # 이전 태그 이후의 커밋 메시지 가져오기
+          COMMITS=$(git log ${LAST_TAG}..HEAD --pretty=format:"%s" -- packages/player)
+          echo "Commits:"
+          echo "$COMMITS"
+          
+          # 버전 타입 결정
+          VERSION_TYPE="patch"
+          
+          if echo "$COMMITS" | grep -qiE "^(feat|feature)(\(.+\))?!:|^[a-z]+(\(.+\))?!:|BREAKING[ -]CHANGE"; then
+            VERSION_TYPE="major"
+            echo "Found breaking change - major version bump"
+          elif echo "$COMMITS" | grep -qiE "^(feat|feature)(\(.+\))?:"; then
+            VERSION_TYPE="minor"
+            echo "Found feature - minor version bump"
+          elif echo "$COMMITS" | grep -qiE "^(fix|bugfix|perf|refactor|revert)(\(.+\))?:"; then
+            VERSION_TYPE="patch"
+            echo "Found fix/improvement - patch version bump"
+          fi
+          
+          echo "version_type=$VERSION_TYPE" >> $GITHUB_OUTPUT
+          
+          # 현재 버전 가져오기
+          CURRENT_VERSION=$(node -p "require('./packages/player/package.json').version")
+          echo "Current version: $CURRENT_VERSION"
+          
+          # 새 버전 계산
+          IFS='.' read -r major minor patch <<< "$CURRENT_VERSION"
+          
+          if [ "$VERSION_TYPE" = "major" ]; then
+            major=$((major + 1))
+            minor=0
+            patch=0
+          elif [ "$VERSION_TYPE" = "minor" ]; then
+            minor=$((minor + 1))
+            patch=0
+          else
+            patch=$((patch + 1))
+          fi
+          
+          NEW_VERSION="$major.$minor.$patch"
+          echo "New version: $NEW_VERSION"
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Update package version
+        run: |
+          cd packages/player
+          npm version ${{ steps.version.outputs.new_version }} --no-git-tag-version
+
+      - name: Commit version bump
+        run: |
+          git add packages/player/package.json
+          git commit -m "chore(release): @mz-player/player@${{ steps.version.outputs.new_version }}"
+          git push
+
+      - name: Create Git tag
+        run: |
+          git tag -a v${{ steps.version.outputs.new_version }} -m "Release v${{ steps.version.outputs.new_version }}"
+          git push origin v${{ steps.version.outputs.new_version }}
+
+      - name: Publish to npm
+        run: |
+          cd packages/player
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          LAST_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          if [ -z "$LAST_TAG" ]; then
+            CHANGELOG=$(git log --pretty=format:"- %s (%h)" -- packages/player)
+          else
+            CHANGELOG=$(git log ${LAST_TAG}..v${{ steps.version.outputs.new_version }} --pretty=format:"- %s (%h)" -- packages/player)
+          fi
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.version.outputs.new_version }}
+          release_name: Release v${{ steps.version.outputs.new_version }}
+          body: |
+            ## 🚀 Release v${{ steps.version.outputs.new_version }}
+            
+            ### 📦 Package
+            - @mz-player/player@${{ steps.version.outputs.new_version }}
+            
+            ### 📝 Changes
+            ${{ steps.changelog.outputs.changelog }}
+            
+            ### 📥 Installation
+            ```bash
+            npm install @mz-player/player@${{ steps.version.outputs.new_version }}
+            # or
+            yarn add @mz-player/player@${{ steps.version.outputs.new_version }}
+            ```
+          draft: false
+          prerelease: false
+
