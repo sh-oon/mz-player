@@ -1,5 +1,5 @@
 {
-  "name": "@mz-player/web",
+  "name": "@root/web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -16,12 +16,12 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.0",
-    "@mz-player/player": "*",
-    "@mz-player/ui-components": "*",
+    "@root/ui-components": "*",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^24",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "mz-player": "*",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

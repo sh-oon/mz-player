@@ -1,5 +1,5 @@
 {
-  "extends": "@mz-player/tsconfig/base.json",
+  "extends": "@root/tsconfig/base.json",
   "files": [],
   "references": [{ "path": "./packages/ui" }, { "path": "./packages/utils" }]
 }

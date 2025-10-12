@@ -604,84 +604,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mz-player/player@npm:*, @mz-player/player@workspace:packages/player":
-  version: 0.0.0-use.local
-  resolution: "@mz-player/player@workspace:packages/player"
-  dependencies:
-    "@mz-player/tsconfig": "npm:*"
-    "@types/react": "npm:^19"
-    "@types/react-dom": "npm:^19"
-    hls.js: "npm:^1.5.26"
-    react: "npm:^19.2.0"
-    react-dom: "npm:^19.2.0"
-    tsup: "npm:^8.3.5"
-    typescript: "npm:^5.3.3"
-  peerDependencies:
-    react: ">=18.0.0"
-    react-dom: ">=18.0.0"
-  languageName: unknown
-  linkType: soft
-
-"@mz-player/tsconfig@npm:*, @mz-player/tsconfig@workspace:packages/tsconfig":
-  version: 0.0.0-use.local
-  resolution: "@mz-player/tsconfig@workspace:packages/tsconfig"
-  languageName: unknown
-  linkType: soft
-
-"@mz-player/ui-components@npm:*, @mz-player/ui-components@workspace:packages/ui":
-  version: 0.0.0-use.local
-  resolution: "@mz-player/ui-components@workspace:packages/ui"
-  dependencies:
-    "@biomejs/biome": "npm:^2.2.5"
-    "@mz-player/tsconfig": "npm:*"
-    "@types/react": "npm:^19.2.2"
-    "@types/react-dom": "npm:^19.2.1"
-    react: "npm:^19.2.0"
-    tsup: "npm:^8.0.1"
-    typescript: "npm:^5.3.3"
-  peerDependencies:
-    react: ^19.2.0
-  languageName: unknown
-  linkType: soft
-
-"@mz-player/utils@workspace:packages/utils":
-  version: 0.0.0-use.local
-  resolution: "@mz-player/utils@workspace:packages/utils"
-  dependencies:
-    "@biomejs/biome": "npm:^2.2.5"
-    "@mz-player/tsconfig": "npm:*"
-    tsup: "npm:~8.5.0"
-    typescript: "npm:~5.9.2"
-  languageName: unknown
-  linkType: soft
-
-"@mz-player/web@workspace:apps/web":
-  version: 0.0.0-use.local
-  resolution: "@mz-player/web@workspace:apps/web"
-  dependencies:
-    "@biomejs/biome": "npm:^2.2.0"
-    "@mz-player/player": "npm:*"
-    "@mz-player/ui-components": "npm:*"
-    "@tailwindcss/postcss": "npm:^4"
-    "@types/node": "npm:^24"
-    "@types/react": "npm:^19"
-    "@types/react-dom": "npm:^19"
-    next: "npm:15.5.4"
-    react: "npm:19.2.0"
-    react-dom: "npm:19.2.0"
-    tailwindcss: "npm:^4"
-    typescript: "npm:^5"
-  languageName: unknown
-  linkType: soft
-
 "@napi-rs/wasm-runtime@npm:^1.0.5":
-  version: 1.0.6
-  resolution: "@napi-rs/wasm-runtime@npm:1.0.6"
+  version: 1.0.7
+  resolution: "@napi-rs/wasm-runtime@npm:1.0.7"
   dependencies:
     "@emnapi/core": "npm:^1.5.0"
     "@emnapi/runtime": "npm:^1.5.0"
     "@tybys/wasm-util": "npm:^0.10.1"
-  checksum: 10c0/af48168c6e13c970498fda3ce7238234a906bc69dd474dc9abd560cdf8a7dea6410147afec8f0191a1d19767c8347d8ec0125a8a93225312f7ac37e06e8c15ad
+  checksum: 10c0/2d8635498136abb49d6dbf7395b78c63422292240963bf055f307b77aeafbde57ae2c0ceaaef215601531b36d6eb92a2cdd6f5ba90ed2aa8127c27aff9c4ae55
   languageName: node
   linkType: hard
 
@@ -931,6 +861,58 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@root/tsconfig@npm:*, @root/tsconfig@workspace:packages/tsconfig":
+  version: 0.0.0-use.local
+  resolution: "@root/tsconfig@workspace:packages/tsconfig"
+  languageName: unknown
+  linkType: soft
+
+"@root/ui-components@npm:*, @root/ui-components@workspace:packages/ui":
+  version: 0.0.0-use.local
+  resolution: "@root/ui-components@workspace:packages/ui"
+  dependencies:
+    "@biomejs/biome": "npm:^2.2.5"
+    "@root/tsconfig": "npm:*"
+    "@types/react": "npm:^19.2.2"
+    "@types/react-dom": "npm:^19.2.1"
+    react: "npm:^19.2.0"
+    tsup: "npm:^8.0.1"
+    typescript: "npm:^5.3.3"
+  peerDependencies:
+    react: ^19.2.0
+  languageName: unknown
+  linkType: soft
+
+"@root/utils@workspace:packages/utils":
+  version: 0.0.0-use.local
+  resolution: "@root/utils@workspace:packages/utils"
+  dependencies:
+    "@biomejs/biome": "npm:^2.2.5"
+    "@root/tsconfig": "npm:*"
+    tsup: "npm:~8.5.0"
+    typescript: "npm:~5.9.2"
+  languageName: unknown
+  linkType: soft
+
+"@root/web@workspace:apps/web":
+  version: 0.0.0-use.local
+  resolution: "@root/web@workspace:apps/web"
+  dependencies:
+    "@biomejs/biome": "npm:^2.2.0"
+    "@root/ui-components": "npm:*"
+    "@tailwindcss/postcss": "npm:^4"
+    "@types/node": "npm:^24"
+    "@types/react": "npm:^19"
+    "@types/react-dom": "npm:^19"
+    mz-player: "npm:*"
+    next: "npm:15.5.4"
+    react: "npm:19.2.0"
+    react-dom: "npm:19.2.0"
+    tailwindcss: "npm:^4"
+    typescript: "npm:^5"
+  languageName: unknown
+  linkType: soft
+
 "@swc/helpers@npm:0.5.15":
   version: 0.5.15
   resolution: "@swc/helpers@npm:0.5.15"
@@ -1123,11 +1105,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:^24":
-  version: 24.7.1
-  resolution: "@types/node@npm:24.7.1"
+  version: 24.7.2
+  resolution: "@types/node@npm:24.7.2"
   dependencies:
     undici-types: "npm:~7.14.0"
-  checksum: 10c0/2525f2aa865d78b1c75faaf8c6bf2af51c930962d8078306620d9a76eafcbbea035142cf2cdc2fcf1b4010cd3958a1c6c59b67aba1ac205dc1e5f895ef6af673
+  checksum: 10c0/03f662f10e4b89bc97016e067101cbabe55025b54c24afb581fb50992d5eeaaf417bdae34bbc668ae8759d3cdbbbadf35fc8b9b29d26f52ede2525d48e919e49
   languageName: node
   linkType: hard
 
@@ -1264,9 +1246,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001579":
-  version: 1.0.30001749
-  resolution: "caniuse-lite@npm:1.0.30001749"
-  checksum: 10c0/f5100599361be03e93cae1f38380fdb78b477b573cb27f8aaf8ed8461ac0233ea84c7e127f441ca0a82ff23f4c37a8855b7c6a02e79d70769a786550bc1be69e
+  version: 1.0.30001750
+  resolution: "caniuse-lite@npm:1.0.30001750"
+  checksum: 10c0/aa77ebf264ca8dcfe913fadaa19f06bf839d65dec24498fdb9c45739ab0828b8275ca30c698f4ee86829d38264eaa461edf4577e407753da8205ab1d285e105d
   languageName: node
   linkType: hard
 
@@ -1511,9 +1493,9 @@ __metadata:
   linkType: hard
 
 "exponential-backoff@npm:^3.1.1":
-  version: 3.1.2
-  resolution: "exponential-backoff@npm:3.1.2"
-  checksum: 10c0/d9d3e1eafa21b78464297df91f1776f7fbaa3d5e3f7f0995648ca5b89c069d17055033817348d9f4a43d1c20b0eab84f75af6991751e839df53e4dfd6f22e844
+  version: 3.1.3
+  resolution: "exponential-backoff@npm:3.1.3"
+  checksum: 10c0/77e3ae682b7b1f4972f563c6dbcd2b0d54ac679e62d5d32f3e5085feba20483cf28bd505543f520e287a56d4d55a28d7874299941faf637e779a1aa5994d1267
   languageName: node
   linkType: hard
 
@@ -2026,15 +2008,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mz-player@workspace:.":
+"mz-player@npm:*, mz-player@workspace:packages/player":
   version: 0.0.0-use.local
-  resolution: "mz-player@workspace:."
+  resolution: "mz-player@workspace:packages/player"
   dependencies:
-    "@biomejs/biome": "npm:^2.2.5"
-    "@mz-player/tsconfig": "npm:*"
-    glob: "npm:^11.0.0"
-    turbo: "npm:^2.5.8"
+    "@root/tsconfig": "npm:*"
+    "@types/react": "npm:^19"
+    "@types/react-dom": "npm:^19"
+    hls.js: "npm:^1.5.26"
+    react: "npm:^19.2.0"
+    react-dom: "npm:^19.2.0"
+    tsup: "npm:^8.3.5"
     typescript: "npm:^5.3.3"
+  peerDependencies:
+    react: ">=18.0.0"
+    react-dom: ">=18.0.0"
   languageName: unknown
   linkType: soft
 
@@ -2430,6 +2418,18 @@ __metadata:
   checksum: 10c0/aaec0f57e887d4fb37d152f93cf7133954eec79d11643e95de768ec9a377f08793b1745c648ca65a0dcc6c795c4d9ca398724d013e5745de270e88a543782aea
   languageName: node
   linkType: hard
+
+"root@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "root@workspace:."
+  dependencies:
+    "@biomejs/biome": "npm:^2.2.5"
+    "@root/tsconfig": "npm:*"
+    glob: "npm:^11.0.0"
+    turbo: "npm:^2.5.8"
+    typescript: "npm:^5.3.3"
+  languageName: unknown
+  linkType: soft
 
 "safer-buffer@npm:>= 2.1.2 < 3.0.0":
   version: 2.1.2

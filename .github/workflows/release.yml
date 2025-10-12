@@ -46,7 +46,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Build packages
-        run: yarn turbo run build --filter=@mz-player/player
+        run: yarn turbo run build --filter=@root/player
 
       - name: Configure Git
         run: |
@@ -119,7 +119,7 @@ jobs:
       - name: Commit version bump
         run: |
           git add packages/player/package.json
-          git commit -m "chore(release): @mz-player/player@${{ steps.version.outputs.new_version }}"
+          git commit -m "chore(release): @root/player@${{ steps.version.outputs.new_version }}"
           git push
 
       - name: Create Git tag
@@ -165,16 +165,16 @@ jobs:
             ## 🚀 Release v${{ steps.version.outputs.new_version }}
             
             ### 📦 Package
-            - @mz-player/player@${{ steps.version.outputs.new_version }}
+            - @root/player@${{ steps.version.outputs.new_version }}
             
             ### 📝 Changes
             ${{ steps.changelog.outputs.changelog }}
             
             ### 📥 Installation
             ```bash
-            npm install @mz-player/player@${{ steps.version.outputs.new_version }}
+            npm install @root/player@${{ steps.version.outputs.new_version }}
             # or
-            yarn add @mz-player/player@${{ steps.version.outputs.new_version }}
+            yarn add @root/player@${{ steps.version.outputs.new_version }}
             ```
           draft: false
           prerelease: false
