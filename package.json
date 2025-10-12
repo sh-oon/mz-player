@@ -2,7 +2,7 @@
   "name": "mz-player",
   "version": "1.0.0",
   "private": true,
-  "description": "Yarn Berry workspace based monorepo boilerplate with TypeScript, Biome, and Turbo",
+  "description": "MZ Player Monorepo",
   "keywords": [
     "monorepo",
     "yarn-workspace",
@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/sh-oon/next-ts-boilerplate.git"
+    "url": "https://github.com/sh-oon/mz-player.git"
   },
   "license": "MIT",
   "author": "sh-oon",

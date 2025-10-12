@@ -6,7 +6,7 @@
   "author": "sh-oon",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sh-oon/next-ts-boilerplate.git",
+    "url": "https://github.com/sh-oon/mz-player.git",
     "directory": "packages/player"
   },
   "main": "./dist/index.js",
