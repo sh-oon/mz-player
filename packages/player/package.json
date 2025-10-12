@@ -1,5 +1,5 @@
 {
-  "name": "@mz-player/player",
+  "name": "mz-player",
   "version": "0.1.0",
   "description": "HLS-based React media player component",
   "license": "MIT",
