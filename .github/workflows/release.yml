@@ -56,12 +56,18 @@ jobs:
       - name: Analyze commits and determine version bump
         id: version
         run: |
-          # 이전 태그 가져오기
-          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
-          echo "Last tag: $LAST_TAG"
+          # 이전 태그가 있는지 확인
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
           
-          # 이전 태그 이후의 커밋 메시지 가져오기
-          COMMITS=$(git log ${LAST_TAG}..HEAD --pretty=format:"%s" -- packages/player)
+          if [ -z "$LAST_TAG" ]; then
+            echo "No previous tag found - this is the first release"
+            echo "Last tag: none"
+            COMMITS=$(git log --pretty=format:"%s" -- packages/player)
+          else
+            echo "Last tag: $LAST_TAG"
+            COMMITS=$(git log ${LAST_TAG}..HEAD --pretty=format:"%s" -- packages/player)
+          fi
+          
           echo "Commits:"
           echo "$COMMITS"
           
@@ -77,6 +83,8 @@ jobs:
           elif echo "$COMMITS" | grep -qiE "^(fix|bugfix|perf|refactor|revert)(\(.+\))?:"; then
             VERSION_TYPE="patch"
             echo "Found fix/improvement - patch version bump"
+          else
+            echo "No conventional commit found - defaulting to patch version bump"
           fi
           
           echo "version_type=$VERSION_TYPE" >> $GITHUB_OUTPUT
@@ -129,12 +137,19 @@ jobs:
       - name: Generate changelog
         id: changelog
         run: |
-          LAST_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          # 현재 태그 이전의 태그 찾기 (HEAD^는 버전 커밋을 가리킴)
+          LAST_TAG=$(git tag --sort=-version:refname | grep -v "^v${{ steps.version.outputs.new_version }}$" | head -n 1 || echo "")
+          
           if [ -z "$LAST_TAG" ]; then
-            CHANGELOG=$(git log --pretty=format:"- %s (%h)" -- packages/player)
+            echo "Generating changelog for first release"
+            # 첫 릴리스 - 전체 히스토리 사용 (버전 커밋 제외)
+            CHANGELOG=$(git log HEAD^ --pretty=format:"- %s (%h)" -- packages/player)
           else
-            CHANGELOG=$(git log ${LAST_TAG}..v${{ steps.version.outputs.new_version }} --pretty=format:"- %s (%h)" -- packages/player)
+            echo "Generating changelog from $LAST_TAG to v${{ steps.version.outputs.new_version }}"
+            # 이전 태그부터 현재까지의 변경사항 (버전 커밋 제외)
+            CHANGELOG=$(git log ${LAST_TAG}..HEAD^ --pretty=format:"- %s (%h)" -- packages/player)
           fi
+          
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
           echo "$CHANGELOG" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
