@@ -33,7 +33,7 @@
     "type-check": "turbo run type-check"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.2.5",
+    "@biomejs/biome": "^2.2.6",
     "@root/tsconfig": "*",
     "glob": "^11.0.0",
     "turbo": "^2.5.8",
