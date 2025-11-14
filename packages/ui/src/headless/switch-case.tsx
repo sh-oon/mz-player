@@ -33,7 +33,7 @@ export const SwitchCase = memo(({ value, cases, defaultCase }: SwitchCaseProps) 
 
   return (
     <div>
-      {caseKeys.map(key => (
+      {caseKeys.map((key) => (
         <Fragment key={key}>{key === value && cases[key]}</Fragment>
       ))}
       {defaultCase && !caseKeys.includes(value.toString()) && <Fragment>{defaultCase}</Fragment>}
