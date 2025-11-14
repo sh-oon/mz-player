@@ -1,313 +1,304 @@
-# Yarn Workspace 모노레포 보일러플레이트
+# MZ Player
 
-[![CI](https://github.com/sh-oon/next-ts-boilerplate/actions/workflows/ci.yml/badge.svg)](https://github.com/sh-oon/next-ts-boilerplate/actions/workflows/ci.yml)
+[![CI](https://github.com/sh-oon/mz-player/actions/workflows/ci.yml/badge.svg)](https://github.com/sh-oon/mz-player/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Yarn](https://img.shields.io/badge/Yarn-4.x-2C8EBB?logo=yarn)](https://yarnpkg.com/)
-[![Biome](https://img.shields.io/badge/Biome-2.x-60A5FA?logo=biome)](https://biomejs.dev/)
+[![npm version](https://img.shields.io/npm/v/mz-player.svg)](https://www.npmjs.com/package/mz-player)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript)](https://www.typescriptlang.org/)
 
-TypeScript, Biome, Turbo를 사용하는 Yarn Berry 기반 모노레포 보일러플레이트입니다.
+HLS 스트리밍을 지원하는 React 기반의 커스터마이징 가능한 미디어 플레이어 컴포넌트입니다.
 
-## 🚀 Quick Start
+## ✨ 주요 기능
 
-### 방법 1: npm create (권장)
+- ✅ **HLS 스트리밍 지원** - hls.js 기반의 안정적인 HLS 재생
+- ✅ **컴파운드 컴포넌트 패턴** - 원하는 UI를 자유롭게 구성
+- ✅ **다국어 자막 지원** - VTT 포맷의 다중 자막 트랙
+- ✅ **Picture-in-Picture** - PiP 모드 지원
+- ✅ **전체화면** - 전체화면 재생 지원
+- ✅ **반응형 디자인** - 모든 화면 크기에 대응
+- ✅ **TypeScript** - 완전한 타입 안정성
+- ✅ **경량화** - 최소한의 번들 크기
+
+## 📦 설치
 
 ```bash
 # npm
-npm create hono-boilerplate my-project
+npm install mz-player
 
 # yarn
-yarn create hono-boilerplate my-project
+yarn add mz-player
 
 # pnpm
-pnpm create hono-boilerplate my-project
+pnpm add mz-player
 ```
 
-### 방법 2: Git Clone
+## 🚀 빠른 시작
 
-```bash
-# 1. 저장소 클론
-git clone https://github.com/sh-oon/next-ts-boilerplate.git my-project
-cd my-project
-
-# 2. Yarn Berry 활성화 및 의존성 설치
-corepack enable
-yarn install
-
-# 3. 조직명 설정 (예: mycompany)
-yarn setup
-
-# 4. 의존성 재설치 및 개발 시작
-yarn install
-yarn dev
-```
-
-## 프로젝트 구조
-
-```
-.
-├── apps/
-│   └── web/              # Next.js 웹 애플리케이션
-├── packages/
-│   ├── eslint-config/    # 공유 ESLint 설정
-│   ├── tsconfig/         # 공유 TypeScript 설정
-│   ├── ui/               # 공유 UI 컴포넌트
-│   └── utils/            # 공유 유틸리티 함수
-├── package.json          # 루트 package.json (workspace 설정)
-├── tsconfig.json         # 루트 TypeScript 설정
-├── .eslintrc.js          # 루트 ESLint 설정
-├── .prettierrc.js        # Prettier 설정
-└── turbo.json            # Turbo 빌드 시스템 설정
-```
-
-## 기능
-
-- ✅ **Yarn Berry (v4)**: 최신 Yarn Workspace 기반 모노레포 관리
-- ✅ **TypeScript**: 전체 프로젝트에 TypeScript 적용
-- ✅ **Turbo**: 빠른 빌드 및 캐싱 시스템
-- ✅ **Biome**: 초고속 린터 및 포매터 (ESLint + Prettier 대체)
-  - import 자동 정렬
-  - 코드 품질 관리
-  - 코드 포맷팅
-  - TypeScript, React 지원
-
-## 시작하기
-
-### 1. 조직명 설정 (첫 설정 시)
-
-보일러플레이트를 처음 사용하는 경우, 조직명을 설정하세요:
-
-```bash
-corepack enable
-yarn install
-yarn setup
-```
-
-스크립트가 실행되면 조직명(예: `mycompany`)을 입력하면 모든 `@mz-player` 참조가 `@mycompany`로 자동 변경됩니다.
-
-### 2. 의존성 재설치
-
-```bash
-yarn install
-```
-
-### 3. 개발 서버 실행
-
-```bash
-yarn dev
-```
-
-웹 애플리케이션이 `http://localhost:3000`에서 실행됩니다.
-
-### 4. 빌드
-
-```bash
-yarn build
-```
-
-### 5. 린트 실행
-
-```bash
-yarn lint
-```
-
-### 6. 린트 자동 수정 및 포맷팅
-
-```bash
-yarn lint:fix
-```
-
-### 7. 코드 포맷팅
-
-```bash
-yarn format
-```
-
-## Workspace 패키지
-
-### Apps
-
-#### @root/web
-
-Next.js 기반의 웹 애플리케이션입니다.
-
-### Packages
-
-#### @root/tsconfig
-
-공유 TypeScript 설정 패키지입니다.
-
-- `base.json` - 기본 설정
-- `nextjs.json` - Next.js 앱용
-- `react-library.json` - React 라이브러리용
-
-#### @root/ui
-
-공유 UI 컴포넌트 라이브러리입니다.
+### 기본 사용법
 
 ```tsx
-import { Button } from '@root/ui';
+import { MediaPlayer } from 'mz-player';
+import 'mz-player/styles.css';
 
-<Button onClick={() => console.log('클릭')}>버튼</Button>;
+function App() {
+  return (
+    <MediaPlayer
+      src="https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
+      controls
+    />
+  );
+}
 ```
 
-#### @root/utils
+### 컴파운드 컴포넌트로 커스터마이징
 
-공유 유틸리티 함수 라이브러리입니다.
+원하는 컨트롤만 선택하여 UI를 자유롭게 구성할 수 있습니다:
 
-```ts
-import { formatDate, debounce } from '@root/utils';
+```tsx
+import { MediaPlayer } from 'mz-player';
+import 'mz-player/styles.css';
 
-const today = formatDate(new Date());
-const debouncedFn = debounce(() => console.log('실행!'), 300);
+function CustomPlayer() {
+  return (
+    <MediaPlayer src="https://example.com/video.m3u8">
+      <MediaPlayer.Controls>
+        <MediaPlayer.TimeDisplay />
+        <MediaPlayer.SeekBar />
+        <MediaPlayer.ButtonGroup>
+          <MediaPlayer.PlayButton />
+          <MediaPlayer.VolumeControl />
+          <MediaPlayer.SubtitleButton />
+          <MediaPlayer.PiPButton />
+          <MediaPlayer.FullscreenButton />
+        </MediaPlayer.ButtonGroup>
+      </MediaPlayer.Controls>
+    </MediaPlayer>
+  );
+}
 ```
 
-## 새로운 앱 추가하기
+## 📖 사용 가능한 컴포넌트
+
+### 컴파운드 컴포넌트
+
+- `MediaPlayer.Controls` - 컨트롤 컨테이너
+- `MediaPlayer.ButtonGroup` - 버튼 그룹 컨테이너
+- `MediaPlayer.PlayButton` - 재생/일시정지 버튼
+- `MediaPlayer.VolumeControl` - 볼륨 컨트롤 (버튼 + 슬라이더)
+- `MediaPlayer.SeekBar` - 시간 탐색 바
+- `MediaPlayer.TimeDisplay` - 현재 시간/전체 시간 표시
+- `MediaPlayer.SubtitleButton` - 자막 선택 버튼
+- `MediaPlayer.PiPButton` - Picture-in-Picture 버튼
+- `MediaPlayer.FullscreenButton` - 전체화면 버튼
+
+각 컴포넌트는 `className` prop을 통해 스타일을 커스터마이징할 수 있습니다.
+
+## 🎬 자막 추가
+
+```tsx
+<MediaPlayer
+  src="https://example.com/video.m3u8"
+  tracks={[
+    {
+      src: '/subtitles/ko.vtt',
+      kind: 'subtitles',
+      srclang: 'ko',
+      label: '한국어',
+      default: true,
+    },
+    {
+      src: '/subtitles/en.vtt',
+      kind: 'subtitles',
+      srclang: 'en',
+      label: 'English',
+    },
+  ]}
+/>
+```
+
+### 커스텀 자막 렌더링
+
+```tsx
+<MediaPlayer
+  src="https://example.com/video.m3u8"
+  tracks={[...]}
+  customSubtitle={(subtitle) => (
+    <div style={{ color: 'yellow', fontSize: '24px' }}>
+      {subtitle}
+    </div>
+  )}
+/>
+```
+
+## ⚙️ Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| src | string | required | 미디어 소스 URL (HLS 또는 일반 비디오) |
+| autoPlay | boolean | false | 자동 재생 여부 |
+| controls | boolean | true | 기본 컨트롤 표시 여부 |
+| loop | boolean | false | 반복 재생 여부 |
+| muted | boolean | false | 음소거 여부 |
+| poster | string | undefined | 포스터 이미지 URL |
+| preload | 'none' \| 'metadata' \| 'auto' | 'metadata' | 비디오 프리로드 옵션 |
+| tracks | VideoTrack[] | [] | 자막 트랙 목록 |
+| customSubtitle | (subtitle: string \| null) => ReactNode | undefined | 커스텀 자막 렌더 함수 |
+| width | string \| number | '100%' | 플레이어 너비 |
+| height | string \| number | 'auto' | 플레이어 높이 |
+| className | string | '' | 추가 CSS 클래스 |
+| children | ReactNode | undefined | 커스텀 컨트롤 UI |
+| onPlay | () => void | undefined | 재생 시작 이벤트 |
+| onPause | () => void | undefined | 일시정지 이벤트 |
+| onEnded | () => void | undefined | 재생 종료 이벤트 |
+| onTimeUpdate | (currentTime, duration) => void | undefined | 시간 업데이트 이벤트 |
+| onVolumeChange | (volume) => void | undefined | 볼륨 변경 이벤트 |
+| onError | (error: Error) => void | undefined | 에러 이벤트 |
+
+## 🎨 스타일 커스터마이징
+
+각 컴포넌트는 `className` prop을 지원합니다:
+
+```tsx
+<MediaPlayer src="..." className="my-player">
+  <MediaPlayer.Controls className="my-controls">
+    <MediaPlayer.PlayButton className="my-play-btn" />
+  </MediaPlayer.Controls>
+</MediaPlayer>
+```
+
+기본 스타일을 override하거나 완전히 새로운 스타일을 적용할 수 있습니다.
+
+## 🔧 고급 사용법
+
+### 자동 재생 (AutoPlay)
+
+브라우저의 autoplay 정책으로 인해 자동 재생하려면 `muted`와 함께 사용해야 합니다:
+
+```tsx
+<MediaPlayer
+  src="https://example.com/video.m3u8"
+  autoPlay
+  muted
+  controls
+/>
+```
+
+### 이벤트 핸들링
+
+```tsx
+<MediaPlayer
+  src="https://example.com/video.m3u8"
+  onPlay={() => console.log('재생 시작')}
+  onPause={() => console.log('일시정지')}
+  onEnded={() => console.log('재생 완료')}
+  onTimeUpdate={(currentTime, duration) => {
+    console.log(`${currentTime} / ${duration}`);
+  }}
+  onVolumeChange={(volume) => {
+    console.log('볼륨:', volume);
+  }}
+  onError={(error) => {
+    console.error('에러 발생:', error);
+  }}
+/>
+```
+
+### 전체화면 커스텀 컨트롤
+
+전체화면 모드에서 다른 UI를 보여줄 수 있습니다:
+
+```tsx
+<MediaPlayer
+  src="https://example.com/video.m3u8"
+  fullscreenControls={(props) => (
+    <div className="fullscreen-controls">
+      {/* 커스텀 전체화면 UI */}
+    </div>
+  )}
+/>
+```
+
+## 🎯 TypeScript 지원
+
+완전한 TypeScript 지원으로 타입 안정성을 제공합니다:
+
+```tsx
+import type { MediaPlayerProps, VideoTrack } from 'mz-player';
+
+const tracks: VideoTrack[] = [
+  {
+    src: '/subtitles/ko.vtt',
+    kind: 'subtitles',
+    srclang: 'ko',
+    label: '한국어',
+  },
+];
+
+const playerProps: MediaPlayerProps = {
+  src: 'https://example.com/video.m3u8',
+  tracks,
+  autoPlay: false,
+};
+```
+
+## 🌐 브라우저 지원
+
+- Chrome/Edge (최신 2개 버전)
+- Firefox (최신 2개 버전)
+- Safari (최신 2개 버전)
+- iOS Safari (최신 2개 버전)
+- Android Chrome (최신 2개 버전)
+
+HLS 스트리밍은 hls.js를 통해 지원됩니다.
+
+## 📚 예제
+
+데모 애플리케이션은 `apps/web`에서 확인할 수 있습니다:
 
 ```bash
-mkdir -p apps/새로운앱
-cd apps/새로운앱
-yarn init -y
+git clone https://github.com/sh-oon/mz-player.git
+cd mz-player
+corepack enable
+yarn install
+yarn dev
 ```
 
-## 새로운 패키지 추가하기
+브라우저에서 `http://localhost:3000`을 열어 확인하세요.
+
+## 🤝 기여하기
+
+기여는 언제나 환영합니다! 이슈를 생성하거나 Pull Request를 보내주세요.
+
+### 개발 환경 설정
 
 ```bash
-mkdir -p packages/새로운패키지
-cd packages/새로운패키지
-yarn init -y
+# 저장소 클론
+git clone https://github.com/sh-oon/mz-player.git
+cd mz-player
+
+# 의존성 설치
+corepack enable
+yarn install
+
+# 개발 서버 실행
+yarn dev
+
+# 빌드
+yarn build
+
+# 린트 및 타입 체크
+yarn lint
+yarn type-check
 ```
 
-## 스크립트
-
-- `yarn setup` - 조직명 설정 (첫 설정 시)
-- `yarn dev` - 모든 앱을 개발 모드로 실행
-- `yarn build` - 모든 앱과 패키지 빌드
-- `yarn lint` - Biome으로 린트 실행
-- `yarn lint:fix` - Biome으로 린트 자동 수정
-- `yarn format` - Biome으로 코드 포맷팅
-- `yarn type-check` - TypeScript 타입 체크
-
-## Yarn Berry 특징
-
-- **node_modules 모드**: 호환성을 위해 node_modules linker 사용
-- **로컬 캐시**: `.yarn/cache` 디렉토리에 의존성 캐시
-- **Zero-installs**: 선택적으로 캐시를 git에 커밋 가능 (현재는 .gitignore 처리)
-- **Workspace 프로토콜**: 내부 패키지는 `*` 버전 사용
-
-## Biome 특징
-
-- **빠른 속도**: Rust로 작성되어 ESLint보다 25배 빠름
-- **올인원**: 린터 + 포매터 통합 (ESLint + Prettier 대체)
-- **Import 정렬**: `assist.actions.source.organizeImports` 활성화로 자동 정렬
-- **VSCode 통합**: 저장 시 자동 포맷팅 및 import 정렬
-- **Overrides**: 프로젝트별로 다른 규칙 적용 가능
-
-### Biome 설정 구조
-
-루트 `biome.json`에서 모든 설정을 중앙 관리하며, `overrides`로 프로젝트별 규칙을 적용합니다:
-
-- **apps/web & packages/ui**: React + a11y 규칙 적용
-- **packages/utils**: 더 엄격한 규칙 (noExplicitAny: error)
-
-### Import 정렬 순서
-
-[Biome 공식 문서](https://biomejs.dev/assist/actions/organize-imports/#_top)를 참고하여 다음 순서로 정렬됩니다:
-
-1. `react` - React 라이브러리
-2. `next`, `next/**` - Next.js 관련 (apps/web만)
-3. `:Library:` - 외부 라이브러리 (node_modules)
-4. `@root/**` - 내부 모노레포 패키지
-5. `**` - 상대 경로 import
-6. `{ "type": true }` - Type import
-
-### Import 정렬 사용법
-
-1. **VSCode에서**: 파일 저장 시 자동 정렬
-2. **커맨드로**: `yarn lint:fix` 실행
-3. **수동으로**: VSCode에서 `Shift + Cmd + P` → "Organize Imports"
-
-### VSCode 설정
-
-1. Biome VSCode 익스텐션 설치 (권장)
-2. 저장 시 자동 포맷팅 및 import 정렬 활성화됨
-3. TypeScript 버전 선택 시 "Use Workspace Version" 선택
-
-## CI/CD Pipeline
-
-GitHub Actions를 통한 자동화된 워크플로우 (`.github/workflows/ci.yml`):
-
-### 1️⃣ Check (검증)
-- ✅ Lint (Biome)
-- ✅ Type check (TypeScript)
-
-### 2️⃣ Build (빌드)
-- ✅ create-hono-boilerplate 패키지 빌드
-- ✅ 빌드 결과물 아티팩트 저장
-
-### 3️⃣ Publish (배포)
-- ✅ main 브랜치 푸시 시에만 실행
-- ✅ npm에 자동 배포
-- ✅ Provenance 포함 (보안)
-
-**PR 생성 시**: Check + Build만 실행  
-**main 푸시 시**: Check + Build + Publish 실행
-
-## NPM 배포
-
-### 자동 배포 (권장)
-
-```bash
-# 1. 버전 업데이트
-cd packages/create-hono-boilerplate
-# package.json에서 version 변경 (예: 1.0.0 → 1.0.1)
-
-# 2. 커밋 및 푸시
-git add .
-git commit -m "chore: bump version to 1.0.1"
-git push
-
-# 3. GitHub에서 Release 생성
-# → GitHub Actions가 자동으로 npm 배포!
-```
-
-### 수동 배포
-
-```bash
-# 1. create 패키지 빌드
-yarn workspace create-hono-boilerplate build
-
-# 2. npm 로그인
-npm login
-
-# 3. create 패키지 배포
-cd packages/create-hono-boilerplate
-npm publish --provenance --access public
-```
-
-### 사용자 사용법
-
-배포 후 사용자들은 다음과 같이 사용할 수 있습니다:
-
-```bash
-# npm
-npm create hono-boilerplate my-project
-
-# yarn
-yarn create hono-boilerplate my-project
-
-# pnpm
-pnpm create hono-boilerplate my-project
-```
-
-CLI가 자동으로:
-1. 템플릿 복사
-2. 조직명 입력 받기
-3. `@mz-player`를 사용자 조직명으로 변경
-4. 의존성 설치
-5. 프로젝트 완료!
-
-## 라이선스
+## 📄 라이선스
 
 MIT License - 자유롭게 사용, 수정, 배포 가능합니다.
-# mz-player
+
+## 🙋‍♂️ 문의 및 지원
+
+- **GitHub Issues**: [https://github.com/sh-oon/mz-player/issues](https://github.com/sh-oon/mz-player/issues)
+- **npm**: [https://www.npmjs.com/package/mz-player](https://www.npmjs.com/package/mz-player)
+
+---
+
+Made with ❤️ by [sh-oon](https://github.com/sh-oon)

@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# @root/web
 
-## Getting Started
+MZ Player 데모 웹 애플리케이션입니다. Next.js 15와 `mz-player` 패키지를 사용하여 HLS 미디어 플레이어의 기능을 시연합니다.
 
-First, run the development server:
+## 기술 스택
+
+- **Next.js 15** - React 프레임워크 (App Router)
+- **Turbopack** - 빠른 개발 서버 및 빌드
+- **Tailwind CSS v4** - 유틸리티 우선 CSS 프레임워크
+- **mz-player** - HLS 기반 미디어 플레이어 컴포넌트
+- **TypeScript** - 타입 안정성
+
+## 개발 서버 실행
+
+모노레포 루트에서:
 
 ```bash
-npm run dev
-# or
+# 모든 앱 개발 서버 실행
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# 또는 이 앱만 실행
+yarn workspace @root/web dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+브라우저에서 [http://localhost:3000](http://localhost:3000) 을 열어 확인하세요.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 빌드
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# 모노레포 루트에서
+yarn build
 
-## Learn More
+# 또는 이 앱만 빌드
+yarn workspace @root/web build
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 프로젝트 구조
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+apps/web/
+├── src/
+│   └── app/          # Next.js App Router 페이지
+├── package.json
+├── tsconfig.json
+└── tailwind.config.ts
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 의존성
 
-## Deploy on Vercel
+이 앱은 다음 워크스페이스 패키지를 사용합니다:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `mz-player` - HLS 미디어 플레이어
+- `@root/ui-components` - 공유 UI 컴포넌트
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 로컬 개발
+
+페이지를 수정하려면 `src/app/page.tsx`를 편집하세요. 파일을 저장하면 Turbopack이 자동으로 변경사항을 반영합니다.
